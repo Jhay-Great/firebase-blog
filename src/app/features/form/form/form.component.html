@@ -1,1 +1,25 @@
-<p>form works!</p>
+
+<section>
+    <h2>Login</h2>
+    
+    <form [formGroup]="form" (ngSubmit)="login()">
+        <div class="email">
+            <label for="email">Email</label>
+            <input type="email" formControlName="email" id="email">
+        </div>
+    
+        <div class="password">
+            <label for="password">Password</label>
+            <input type="password" formControlName="password" id="password">
+        </div>
+    
+        <button type="submit">
+            login
+        </button>
+    
+    </form>
+
+    <small>
+        Don't have an account? <a> sign up </a>
+    </small>
+</section>
