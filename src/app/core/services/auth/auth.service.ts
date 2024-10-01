@@ -58,12 +58,12 @@ export class AuthService implements ILogOut, ILogin {
     const response = from(signInWithPopup(auth, provider));
 
     // custom observable to handle provider response
-    return this.handleProviderResponse(response);
+    return this.handleProviderResponse(response).subscribe();
   }
 
   // handle provider/google response
   handleProviderResponse (response: Observable<any>) {
-    response.pipe(map (response => {
+    return response.pipe(map (response => {
       const client = GoogleAuthProvider.credentialFromResult(response);
       const token = client?.accessToken;
       return { client, token };
