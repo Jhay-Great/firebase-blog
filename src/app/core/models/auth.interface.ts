@@ -16,6 +16,16 @@ export interface IUserData {
     confirmPassword?: string;
 }
 
+export interface IUserResponseData {
+    username: string;
+    email: string;
+    creationTime: number;
+    createAt?: string;
+    lastSignInTime?: string;
+    
+
+}
+
 // export interface ISignOut {
 //     signOut() :void
 // }

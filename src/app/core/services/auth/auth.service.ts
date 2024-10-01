@@ -9,7 +9,7 @@ import {
   getAuth,
   signInWithPopup,
 } from '@angular/fire/auth';
-import { catchError, from, map, Observable, of, retry } from 'rxjs';
+import { catchError, from, map, Observable, of, retry, throwError } from 'rxjs';
 
 // local imports
 import {
@@ -23,6 +23,8 @@ import {
   providedIn: 'root',
 })
 export class AuthService implements ILogOut, ILogin {
+  private token!:string | undefined;
+  
   constructor(private auth: Auth) {}
 
   // login
@@ -33,7 +35,7 @@ export class AuthService implements ILogOut, ILogin {
     );
 
     // handles response
-    this.handleResponse(response).subscribe();
+    return this.handleResponse(response);
   }
 
   // sign up
@@ -48,7 +50,7 @@ export class AuthService implements ILogOut, ILogin {
     );
 
     // handles response
-    this.handleResponse(response).subscribe();
+    return this.handleResponse(response)
   }
 
   // sign in with google
@@ -58,7 +60,17 @@ export class AuthService implements ILogOut, ILogin {
     const response = from(signInWithPopup(auth, provider));
 
     // custom observable to handle provider response
-    return this.handleProviderResponse(response).subscribe();
+    return this.handleProviderResponse(response);
+  }
+
+  // sets token
+  updateToken (token:string | undefined) {
+    this.token = token;
+  }
+
+  // retrieves token
+  getToken () {
+    return this.token;
   }
 
   // handle provider/google response
@@ -66,6 +78,7 @@ export class AuthService implements ILogOut, ILogin {
     return response.pipe(map (response => {
       const client = GoogleAuthProvider.credentialFromResult(response);
       const token = client?.accessToken;
+      this.updateToken(token); // not really needed
       return { client, token };
     }),
     retry(2),
@@ -74,21 +87,24 @@ export class AuthService implements ILogOut, ILogin {
       const message = err.message;
       const clientError = GoogleAuthProvider.credentialFromError(err);
       console.log({clientError, message, errorCode})
-      return message;
+      return throwError(() => err.message);
     })
   )
   }
 
-  // custom rxjs operator // remove from here later
+  // custom rxjs operator for sign up and login // remove from here later
   handleResponse(response: Observable<any>) {
     return response.pipe(
       map((data) => {
-        console.log('on success: ', data);
-        return data;
+        console.log('on success: ', data.user);
+        const { email, metadata: {creationTime}, metadata} = data.user;
+        console.log('logging metadata: ', metadata);
+        console.log('logging user details: ', email, creationTime);
+        return { email, creationTime };
       }),
       catchError((err) => {
         console.log('on error: ', err.message);
-        return of('login failed');
+        return throwError(() => err.message);
       })
     );
   }

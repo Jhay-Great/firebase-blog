@@ -1,1 +1,6 @@
-<p>user-profile works!</p>
+
+<section>
+    <!-- {{ user$.username | async }} -->
+    {{ user$.email | async }}
+    {{ user$.creationTime | async }}
+</section>

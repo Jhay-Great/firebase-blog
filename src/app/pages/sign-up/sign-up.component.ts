@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../core/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,7 +18,11 @@ import { AuthService } from '../../core/services/auth/auth.service';
 export class SignUpComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -33,6 +38,10 @@ export class SignUpComponent implements OnInit {
       ],
       confirmPassword: ['', [Validators.required]],
     });
+  }
+
+  get username () {
+    return this.form.get('username');
   }
 
   get email() {
@@ -54,7 +63,22 @@ export class SignUpComponent implements OnInit {
       return;
     }
     const data = formData.value;
-    this.authService.signup(data);
+    console.log('console.log: ', data);
+    const response = this.authService.signup(data);
+    response.subscribe({
+      next: value => {
+        console.log(value);
+        this.router.navigate(['login'])
+
+      },
+      error: error => {
+        console.log(error);
+        
+      },
+      complete: () => {
+        console.log('done');
+      }
+    })
   }
 
   togglePasswordVisibility() {}

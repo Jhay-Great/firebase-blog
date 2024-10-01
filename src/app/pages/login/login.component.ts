@@ -6,6 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { ApplicationService } from '../../shared/services/app/application.service';
+import { IUserResponseData } from '../../core/models/auth.interface';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +20,15 @@ import {
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
+  subscription!: Subscription;
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+
+  constructor(
+    private authService: AuthService, 
+    private applicationService: ApplicationService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -49,7 +60,23 @@ export class LoginComponent implements OnInit {
       return;
     }
     const data = formData.value;
-    this.authService.login(data);
+    const response = this.authService.login(data);
+    this.subscription = response.subscribe({
+      next: response => {
+        // route to page
+        console.log('response: ', response);
+        const userData: IUserResponseData = {...response, username: data.username}
+        this.applicationService.setUser(response)
+        this.router.navigate(['profile'])
+      },
+      error: error => {
+        // display error message
+        console.log('logging error: ', error);
+      },
+      complete: () => {
+        console.log('done')
+      }
+    })
   }
 
   signInWithProvider() {
