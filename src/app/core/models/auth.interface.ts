@@ -1,5 +1,5 @@
 export interface ILogin {
-    login(data:{email:string, password:string}) :void
+    login(data:{email:string, password:string}) :any
 }
 
 export interface ILogOut {
@@ -7,9 +7,15 @@ export interface ILogOut {
 }
 
 export interface ISignIn {
-    signIn() :void
+    signup(data:any) :void
 }
 
-export interface ISignOut {
-    signOut() :void
+export interface IUserData {
+    email: string;
+    password: string;
+    confirmPassword?: string;
 }
+
+// export interface ISignOut {
+//     signOut() :void
+// }

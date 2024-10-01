@@ -34,6 +34,10 @@ export class SignUpComponent implements OnInit{
     return this.form.get('password');
   }
 
+  get confirmPassword () {
+    return this.form.get('confirmPassword');
+  }
+
   signUp () {
     const formData = this.form;
     if (formData.invalid) {
@@ -41,7 +45,11 @@ export class SignUpComponent implements OnInit{
       return;
     }
     const data = formData.value;
-    // this.authService.login();
+    this.authService.signup(data);
+  }
+
+  togglePasswordVisibility () {
+
   }
 
 

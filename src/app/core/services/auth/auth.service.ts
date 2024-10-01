@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { signInWithEmailAndPassword, Auth, signOut } from '@angular/fire/auth';
-import { ILogOut, ILogin, ISignOut, ISignIn } from '../../models/auth.interface';
-import { catchError, from, map, of } from 'rxjs';
+import { signInWithEmailAndPassword, Auth, signOut, User, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { catchError, from, map, Observable, of } from 'rxjs';
+
+// local imports
+import { ILogOut, ILogin, ISignIn, IUserData } from '../../models/auth.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,26 +15,36 @@ export class AuthService implements ILogOut, ILogin {
   ) { }
 
   // login
-  login(data:{email:string, password:string}) {
+  login(data:IUserData) {
     const { email, password } = data;
     const response = from(signInWithEmailAndPassword(this.auth, email, password));
-    console.log('logging response: ', response);
-    response.pipe(
-      map(data => {
-        console.log(data);
-        return 'login successful';
-      }),
-      catchError(err => {
-        console.log(err.message);
-        return of('login failed');
-      })
-    ).subscribe();
+    this.handleResponse(response).subscribe();
   }
 
   // sign up
   logout () {
     signOut(this.auth);
   }
+  
+  // register / sign up
+  signup (data:IUserData) {
+    const response = from(createUserWithEmailAndPassword(this.auth, data.email, data.password));
 
-  // forgotten password
+    // response
+    this.handleResponse(response).subscribe();
+  }
+
+  // custom rxjs operator // remove from here later
+  handleResponse (response:Observable<any>) {
+    return response.pipe(
+      map(data => {
+        console.log('on success: ', data);
+        return data;
+      }),
+      catchError(err => {
+        console.log('on error: ', err.message);
+        return of('login failed');
+      })
+    )
+  }
 }
