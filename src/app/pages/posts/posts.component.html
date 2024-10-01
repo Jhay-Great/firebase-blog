@@ -5,3 +5,24 @@
     <button type="submit">Post</button>
 
 </form>
+
+<button (click)="getPosts()">
+    see comments
+</button>
+
+<section>
+    @for (post of posts; track $index) {
+        <div class="post">
+            <p>
+                {{ post.title }}
+
+            </p>
+            <button class="delete" (click)="deletePost(post.id)">
+                delete
+            </button>
+            <button>
+                edit
+            </button>
+        </div>
+    }
+</section>
