@@ -1,29 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core/services/auth/auth.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../../core/services/auth/auth.service';
 
 @Component({
-  selector: 'app-form',
+  selector: 'app-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './form.component.html',
-  styleUrl: './form.component.scss'
+  imports: [ReactiveFormsModule, ],
+  templateUrl: './sign-up.component.html',
+  styleUrl: './sign-up.component.scss'
 })
-export class FormComponent implements OnInit {
-  form!: FormGroup;
+export class SignUpComponent implements OnInit{
+  form!:FormGroup;
 
   constructor (
-    private authService: AuthService,
     private fb: FormBuilder,
-  ) {};
+    private authService: AuthService,
+  ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+      confirmPassword: ['', [Validators.required]],
     })
   }
 
+  
   get email () {
     return this.form.get('email');
   }
@@ -32,14 +34,15 @@ export class FormComponent implements OnInit {
     return this.form.get('password');
   }
 
-  login () {
+  signUp () {
     const formData = this.form;
     if (formData.invalid) {
       console.log(formData);
       return;
     }
     const data = formData.value;
-    this.authService.login(data);
+    // this.authService.login();
   }
+
 
 }
