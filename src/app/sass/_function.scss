@@ -2,3 +2,7 @@
 @function addTransparency($base-color, $transparency-level) {
     @return rgba($base-color, $transparency-level);
   }
+
+@function double ($size) {
+  @return $size * 2;
+}

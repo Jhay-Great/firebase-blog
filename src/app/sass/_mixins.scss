@@ -8,6 +8,11 @@
     gap: $gap + rem;
 }
 
+@mixin relativeSize ($width:100%, $height:100%) {
+    width: $width;
+    height: $height;
+}
+
 @mixin position ($position) {
     position: $position;
 
@@ -32,6 +37,16 @@
     font-weight: $weight;
     font-size: $size;
     color: $color;
+}
+
+// button
+@mixin defaultButtons ($padding:1rem, $border-color:transparent, $radius:0px) {
+    width: fit-content;
+    height: fit-content;
+    padding: $padding;
+    cursor: pointer;
+    border: 1px solid $border-color;
+    border-radius: $radius;
 }
 
 @mixin breakpoint ($breakpoint) {
