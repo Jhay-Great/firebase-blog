@@ -1,0 +1,14 @@
+
+<div class="post">
+    <p>
+        {{ post.title }}
+        
+
+    </p>
+    <button class="delete" (click)="deletePost(post.id)">
+        delete
+    </button>
+    <button class="edit" (click)="editPost(post.id)">
+        edit
+    </button>
+</div>

@@ -1,20 +1,32 @@
 
-<form [formGroup]="postForm" (ngSubmit)="post()">
+<!-- <form [formGroup]="postForm" (ngSubmit)="post()">
     <input type="text" formControlName="title" id="title">
     <textarea formControlName="body" id="post-body"></textarea>
     <button type="submit">Post</button>
 
-</form>
+</form> -->
 
-<button (click)="getPosts()">
+<!-- <button (click)="getPosts()">
     see comments
-</button>
+</button> -->
+
+<section class="create-post" [routerLink]="['create-post']">
+    <button>
+        Create a post
+    </button>
+</section>
 
 <section>
     @for (post of posts; track $index) {
-        <div class="post">
+        <app-post 
+            [post]="post"
+        />
+        <!-- <div class="post">
             <p>
                 {{ post.title }}
+                <app-post 
+                    [post]="post"
+                />
 
             </p>
             <button class="delete" (click)="deletePost(post.id)">
@@ -23,6 +35,6 @@
             <button>
                 edit
             </button>
-        </div>
+        </div> -->
     }
 </section>

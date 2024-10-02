@@ -1,0 +1,6 @@
+<form [formGroup]="postForm" (ngSubmit)="isEdit ? update() : post() ">
+    <input type="text" formControlName="title" id="title">
+    <textarea formControlName="body" id="post-body"></textarea>
+    <button type="submit">Post</button>
+
+</form>

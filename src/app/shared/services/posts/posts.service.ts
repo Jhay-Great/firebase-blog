@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 // import {AngularFirestore} from '@angular/fire/compat/firestore'
-import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, getDoc, } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, getDoc, updateDoc, } from '@angular/fire/firestore';
 import { IPost } from '../../../core/models/post.interface';
 import { catchError, from, map, Observable, retry, take, throwError } from 'rxjs';
 import { retryError } from '../../../core/rxjs/rety.custom-operator';
@@ -11,30 +11,16 @@ import { retryError } from '../../../core/rxjs/rety.custom-operator';
 export class PostsService {
   
   constructor(
-    // private firebase: AngularFirestore,
     private firestore: Firestore,
-  ) { 
-    // console.log(this.collection);
-   }
+  ) { }
    
-  //  getAll<T>(path: string): Observable<T[]> {
-  //   const collectionInstance = collection(this.firestore, 'posts');
-  //   return collectionData(collectionInstance) as Observable<T[]>;
-  // }
-  
-  createPost (data:any) {
+  createPost (data:IPost) {
     const collections = collection(this.firestore, 'posts');
-
-    // addDoc(collections, data).then(() => {
-    //   console.log('someting')
-    // }).catch(() => {
-    //   console.log('error');
-    // })
-
+    
     const response = from(addDoc(collections, data));
     return response.pipe(
       take(1),
-      map(data => {
+      map((data) => {
         console.log('data: ', data);
         return 'blog posted successfully';
       }),
@@ -51,7 +37,7 @@ export class PostsService {
 
     const postCollection = collection(this.firestore, 'posts');
     return collectionData(postCollection, { idField: 'id' }).pipe(
-      map((data: any[]) => data ),
+      map((data: any[]) => (console.log('data: ', data), data )),
       retryError(3)
     );
     
@@ -72,13 +58,54 @@ export class PostsService {
     // )
 
     // getDoc(postCollection),
+
   };
 
-  updatePost () {};
+  // gets a post
+  // getAPost (id:string)  {
+  //   const postInstance = this.getDocInstance('posts', id);
+  //   return from(getDoc(postInstance)).pipe(
+  //     map(data => {
+  //       console.log(data);
+  //     }),
+  //     retryError(3)
+  //   );
+
+  // }
+
+  getAPost(id: string): Observable<IPost | null> {
+    const docRef = doc(this.firestore, 'posts', id);
+    return from(getDoc(docRef)).pipe(
+      map(docSnap => {
+        if (docSnap.exists()) {
+          return { id: docSnap.id, ...docSnap.data() } as IPost;
+        } else {
+          return null;
+        }
+      }),
+      retryError(3)
+    );
+  }
+
+  updatePost (id:string, data:any) {
+    const docInstance = doc(this.firestore, `posts/${id}`);
+    return from(updateDoc(docInstance, data));
+  };
+
+  // update<T>(path: string, id: string, data: Partial<T>): Promise<void> {
+  //   const docInstance = doc(this.firestore, `${path}/${id}`);
+  //   return updateDoc(docInstance, data);
+  // }
 
   deletePost (id:string) {
-    const postInstance = doc(this.firestore, `posts/${id}`)
+    // const postInstance = doc(this.firestore, `posts/${id}`);
+    const postInstance = this.getDocInstance('posts', id);
     console.log('logging post ref: ', postInstance);
     return from(deleteDoc(postInstance));
+  }
+
+  // returns the specified column in the db
+  getDocInstance (path:string, id:string='') {
+    return doc(this.firestore, `${path}/${id}`);
   }
 }

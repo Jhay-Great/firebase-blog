@@ -1,15 +1,16 @@
 export interface IPost {
+    id: string;
     body: string;
     title: string;
-    comments: IComment[]
-    userId: string;
+    comments?: IComment[]
+    userId?: string;
     updatedAt?: string;
     createdAt?: string;
 }
 
 export interface IComment {
-    userId: string;
-    postId: string;
-    id: string;
+    userId?: string;
+    postId?: string;
+    id?: string;
     body: string;
 }
