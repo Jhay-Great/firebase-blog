@@ -1,0 +1,25 @@
+
+<section class="blog-post">
+    <h1>
+        {{ title }}
+        <!-- {{ blogPost.title }} -->
+    </h1>
+    
+    <p>
+        {{ body }}
+        <!-- {{ blogPost.body }} -->
+    </p>
+
+</section>
+
+<section class="comments">
+    <h1>Comments</h1>
+    <!-- <app-post-modal /> -->
+    <section class="comments-section">
+        <form [formGroup]="commentForm" (ngSubmit)="addComment()">
+            <input type="text" formControlName="comment">
+            <button type="submit">Add comments</button>
+        </form>
+    </section>
+</section>
+

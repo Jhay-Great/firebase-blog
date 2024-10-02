@@ -9,7 +9,7 @@ import {
   getAuth,
   signInWithPopup,
 } from '@angular/fire/auth';
-import { catchError, from, map, Observable, of, retry, throwError } from 'rxjs';
+import { catchError, from, map, Observable, of, retry, tap, throwError } from 'rxjs';
 
 // local imports
 import {
@@ -18,6 +18,8 @@ import {
   ISignIn,
   IUserData,
 } from '../../models/auth.interface';
+import { addDoc, Firestore } from '@angular/fire/firestore';
+import { FirebaseService } from '../firebase/firebase.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +27,11 @@ import {
 export class AuthService implements ILogOut, ILogin {
   private token!:string | undefined;
   
-  constructor(private auth: Auth) {}
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore,
+    private firebaseService: FirebaseService
+  ) {}
 
   // login
   login(data: IUserData) {
@@ -99,11 +105,22 @@ export class AuthService implements ILogOut, ILogin {
     return response.pipe(
       map((data) => {
         console.log('on success: ', data.user);
-        const { email, metadata: {creationTime}, metadata} = data.user;
+        const { email, uid, metadata: {creationTime}, metadata} = data.user;
 
-        console.log('logging metadata: ', metadata);
-        console.log('logging user details: ', email, creationTime);
-        return { email, creationTime };
+        // console.log('logging metadata: ', metadata);
+        // console.log('logging user details: ', email, creationTime);
+        return { email, creationTime, uid, username };
+      }),
+      tap(data => {
+        console.log('logging data in tap: ', data); 
+        // create a new user in the db
+        // console.log('logging username: ', data.username);
+        if (!data.username) return;
+        const usersCollections = this.firebaseService.documentCollection('users');
+        const response = from(addDoc(usersCollections, data));
+        response.subscribe(val => console.log(val));
+
+
       }),
       catchError((err) => {
         console.log('on error: ', err.message);

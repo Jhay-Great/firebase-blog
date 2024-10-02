@@ -19,6 +19,7 @@
 <section>
     @for (post of posts; track $index) {
         <app-post 
+            [routerLink]="['post', post.id]"
             [post]="post"
         />
         <!-- <div class="post">

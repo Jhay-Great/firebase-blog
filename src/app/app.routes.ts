@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { PostListComponent } from './pages/post-list/post-list.component';
 import { PostComponent } from './shared/features/post/post.component';
 import { PostModalComponent } from './shared/features/post-modal/post-modal.component';
+import { PostDetailComponent } from './pages/post-detail/post-detail.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,17 @@ export const routes: Routes = [
     path: 'edit-post/:id',
     loadComponent: () => import('./shared/features/post-modal/post-modal.component').then(pm => pm.PostModalComponent),
     title: 'Edit post',
+  },
+  {
+    path: 'post/:id',
+    loadComponent: () => import('./pages/post-detail/post-detail.component').then(d => d.PostDetailComponent),
+    title: 'Post',
+
+
+    // path: 'post/:id',
+    // loadComponent: () => import('./pages/post-detail/post-detail.component').then(d => d.PostDetailComponent),
+    // // loadComponent: () => import('./pages/post-detail/post-detail.component').then(d => d.PostDetailComponent),
+    // title: 'Post',
   },
   {
     path: '',
