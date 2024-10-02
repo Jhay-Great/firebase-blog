@@ -74,8 +74,9 @@ export class PostsService {
   // }
 
   getAPost(id: string): Observable<IPost | null> {
-    const docRef = doc(this.firestore, 'posts', id);
-    return from(getDoc(docRef)).pipe(
+    // const docRef = doc(this.firestore, 'posts', id);
+    const postInstance = this.getDocInstance('posts', id);
+    return from(getDoc(postInstance)).pipe(
       map(docSnap => {
         if (docSnap.exists()) {
           return { id: docSnap.id, ...docSnap.data() } as IPost;

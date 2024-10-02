@@ -11,6 +11,7 @@ export interface ISignIn {
 }
 
 export interface IUserData {
+    username: string;
     email: string;
     password: string;
     confirmPassword?: string;

@@ -48,9 +48,11 @@ export class AuthService implements ILogOut, ILogin {
     const response = from(
       createUserWithEmailAndPassword(this.auth, data.email, data.password)
     );
+    const { username } = data;
+    console.log('logging data: ', username)
 
     // handles response
-    return this.handleResponse(response)
+    return this.handleResponse(response, username)
   }
 
   // sign in with google
@@ -93,11 +95,12 @@ export class AuthService implements ILogOut, ILogin {
   }
 
   // custom rxjs operator for sign up and login // remove from here later
-  handleResponse(response: Observable<any>) {
+  handleResponse(response: Observable<any>, username:string='') {
     return response.pipe(
       map((data) => {
         console.log('on success: ', data.user);
         const { email, metadata: {creationTime}, metadata} = data.user;
+
         console.log('logging metadata: ', metadata);
         console.log('logging user details: ', email, creationTime);
         return { email, creationTime };
