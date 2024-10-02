@@ -12,5 +12,5 @@ export interface IComment {
     userId?: string;
     postId?: string;
     id?: string;
-    body: string;
+    comment: string;
 }

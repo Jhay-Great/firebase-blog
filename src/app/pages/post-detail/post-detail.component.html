@@ -21,5 +21,13 @@
             <button type="submit">Add comments</button>
         </form>
     </section>
+
+    <section class="avaliable-comments">
+        @for (comment of commentsData; track $index) {
+            <p>
+                {{ comment.comment }}
+            </p>
+        }
+    </section>
 </section>
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, Firestore, query, where } from '@angular/fire/firestore';
 import { from, take, map, retry, catchError, throwError } from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class FirebaseService {
     return collection(this.firestore, collectionName);
   }
 
-  createPost <T>(data:T, collectionName:string) {
+  create <T>(data:T, collectionName:string) {
     // const collections = collection(this.firestore, 'posts');
     const collections = this.documentCollection(collectionName);
     const userId = this.auth.currentUser?.uid;
@@ -25,19 +25,18 @@ export class FirebaseService {
     
     // const response = from(addDoc(collections, data));
     return from(addDoc(collections, userPost));
-
-    // return response.pipe(
-    //   take(1),
-    //   map((data) => {
-    //     console.log('data: ', data);
-    //     return 'blog posted successfully';
-    //   }),
-    //   retry(3),
-    //   catchError(error => {
-    //     console.log(error);
-    //     return throwError(() => error.message);
-    //   })
-    // )
+    
     
   };
+
+  // get (collectionName:string) {
+  //   const collections = this.documentCollection(collectionName);
+  //   return from(collectionData(collections, { idField: 'id'}));
+  // }
+
+  getsAllRelated (collectionName:string, postId:string) {
+    const collections = this.documentCollection(collectionName)
+    const queryData = query(collections, where("postId", "==", postId))
+    return collectionData(queryData, { idField: 'id' });
+  }
 }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostsService } from '../../shared/services/posts/posts.service';
-import { IPost } from '../../core/models/post.interface';
+import { IComment, IPost } from '../../core/models/post.interface';
 import { PostModalComponent } from '../../shared/features/post-modal/post-modal.component';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -23,6 +23,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   title!:string;
   body!:string;
   commentForm!:FormGroup;
+  commentsData!:IComment[];
 
   constructor (
     private activatedRoute: ActivatedRoute,
@@ -60,9 +61,13 @@ export class PostDetailComponent implements OnInit, OnDestroy{
       }
     )
 
+    // initializes form 
     this.commentForm = this.fb.group({
       comment: ['', Validators.required],
     })
+
+    // gets comments
+    this.getPostComments();
   }
 
   ngOnDestroy(): void {
@@ -88,6 +93,28 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     this.commentService.post(data);
     console.log('done posting comments');
     
+  }
+
+  // gets posts comments
+  getPostComments () {
+    this.loading = true;
+    console.log('getting comments...')
+    const response = this.commentService.getComments(this.postId);
+    response.subscribe({
+      next: (value) => {
+        this.loading = false;
+        this.commentsData = value as IComment[];
+        console.log(this.commentsData);
+      },
+      error: error => {
+        console.log('logging error: ', error);
+        // handle error
+      },
+      complete: () => {
+        console.log('done');
+        // of loader
+      }
+    })
   }
 
 
