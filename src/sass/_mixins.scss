@@ -1,0 +1,52 @@
+@use './variables' as var;
+
+@mixin flex ($direction:row, $justify:flex-start, $align:stretch, $gap:1) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+    gap: $gap + rem;
+}
+
+@mixin position ($position) {
+    position: $position;
+
+}
+
+// overflow
+@mixin overflow ($overflow) {
+    overflow-x: $overflow;
+    scrollbar-width: none;
+}
+
+// movie card
+@mixin movie-card ($width) {
+    overflow: hidden;
+    position: relative;
+    width: $width;
+}
+
+// font
+@mixin font ($size: var.$font-size-l, $weight: 300, $color: var.$color-white) {
+    font-family: var.$font-family;
+    font-weight: $weight;
+    font-size: $size;
+    color: $color;
+}
+
+@mixin breakpoint ($breakpoint) {
+    @if map-has-key($map: var.$map-for-breakpoints, $key: $breakpoint) {
+        @media (min-width: map-get(var.$map-for-breakpoints, $breakpoint)) {
+            @content
+
+        } 
+    } 
+    @else {
+        @error "Breakpoint '#{$breakpoint}' is not defined."  
+        }
+}
+
+
+
+
+
