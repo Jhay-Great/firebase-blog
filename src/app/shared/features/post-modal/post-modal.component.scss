@@ -1,0 +1,69 @@
+@use '../../../sass/mixins' as mix;
+@use '../../../sass/variables' as var;
+@use '../../../sass/function' as func;
+
+form {
+    width: min(500px, 90%);
+    @include mix.flex(column, flex-start, stretch, 1.5);
+    background: func.addTransparency(var.$color-white-faded, 30%);
+    padding: 1.5rem;
+    border-radius: 6px;
+    border: none;
+
+    input, textarea {
+        // width: 100%;
+        @include mix.relativeSize(100%, 40px);
+        padding: 0.5rem 1rem;
+
+        border: .5px solid transparent;
+        border-radius: 4px;
+        outline: none;
+        transition: all 500ms ease-in-out;
+        
+        // &:active, &:hover {
+        //     // border: .5px solid var.$color-dark-blue;
+        //     // border-color: transparent;
+        // }
+        &:focus {
+            border: .5px solid var.$color-dark-blue;
+        }
+
+    }
+
+    textarea {
+        width: initial;
+        height: initial;
+        // transition: all 200ms ease-in-out;
+
+        // transition: none;
+    }
+
+    button {
+        padding-inline: 2rem;
+        transition: all 500ms ease-in-out;
+        border-radius: 6px;
+        background-color: var.$color-blue;
+        color: var.$color-white;
+        font-weight: 600;
+        width: 100%;
+    
+        &:hover {
+            // @include mix.buttonEffects(1);
+            background-color: func.addTransparency(var.$color-blue, 80%);
+        }
+    }
+}
+
+form {
+    // @include mix.relativeSize(100%, fit-content);
+    // @include mix.flex(column);
+
+    div {
+        @include mix.flex(column);
+
+
+    }
+    
+    
+
+}

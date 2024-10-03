@@ -1,6 +1,8 @@
 <form [formGroup]="postForm" (ngSubmit)="isEdit ? update() : post() ">
-    <input type="text" formControlName="title" id="title">
-    <textarea formControlName="body" id="post-body"></textarea>
+    <input type="text" formControlName="title" id="title" placeholder="Enter the title of your post">
+    <textarea formControlName="body" id="post-body" rows="10" cols="20" placeholder="Your write up.&#10;eg. Your favorite topic"></textarea>
+    <!-- <textarea formControlName="body" id="post-body" placeholder="Your write up.&#10;eg. Your favorite topic"></textarea> -->
+
     <button type="submit">Post</button>
 
 </form>
