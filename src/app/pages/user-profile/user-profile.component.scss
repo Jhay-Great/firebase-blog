@@ -16,6 +16,9 @@
 
         .details {
             @include mix.flex(column);
+            border-bottom: 1px solid var.$color-white-faded, 80%;
+            padding-bottom: 2rem;
+            
             
             @include mix.breakpoint('large') {
                 display: grid;
