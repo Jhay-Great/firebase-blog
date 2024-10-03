@@ -30,7 +30,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     private activatedRoute: ActivatedRoute,
     private postService: PostsService,
     private fb: FormBuilder,
-    private commentService: CommentService,
+    private commentService: CommentService, 
     private titleService: Title,
     private metaService: Meta
   ) {

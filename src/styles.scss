@@ -29,12 +29,16 @@ app-root {
 }
 
 // login page style
-app-login {
+app-login, app-sign-up {
     // @include mix.flex(column);
     @extend app-root;
     justify-content: center;
     align-items: center;
     background-color: var.$color-white;
+    background: color-mix(in srgb, var.$color-white 95%, transparent)
+    // filter: brightness(.8);
+    // backdrop-filter: brightness(.9);
+
 }
 
 h1 {}

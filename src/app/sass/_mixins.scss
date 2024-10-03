@@ -47,6 +47,12 @@
     cursor: pointer;
     border: 1px solid $border-color;
     border-radius: $radius;
+    
+}
+
+@mixin buttonEffects ($effect: .7) {
+    filter: brightness($effect);
+
 }
 
 @mixin breakpoint ($breakpoint) {

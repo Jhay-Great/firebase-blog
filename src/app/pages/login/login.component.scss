@@ -12,6 +12,7 @@ section {
     background-color: var.$color-greyish-blue;
     background-color: func.addTransparency(var.$color-white-faded, 30%);
     border-radius: 8px;
+    backdrop-filter: blur(3px);
     // @include mix.flex(column);
 
     h2 {
@@ -28,30 +29,66 @@ section {
             input {
                 // width: 100%;
                 @include mix.relativeSize(100%, 40px);
+                padding: 0.5rem 1rem;
 
                 border: .5px solid transparent;
                 border-radius: 4px;
                 outline: none;
                 transition: all 500ms ease-in-out;
                 
-                &:active, &:hover {
-                    // border: .5px solid var.$color-dark-blue;
-                    // border-color: transparent;
-                }
+                // &:active, &:hover {
+                //     // border: .5px solid var.$color-dark-blue;
+                //     // border-color: transparent;
+                // }
                 &:focus {
                     border: .5px solid var.$color-dark-blue;
                 }
 
             }
         }
+        
+        
+        button {
+            padding-inline: 2rem;
+            transition: all 500ms ease-in-out;
+            border-radius: 6px;
+            background-color: var.$color-blue;
+            color: var.$color-white;
+            font-weight: 600;
+            width: 100%;
+        
+            &:hover {
+                // @include mix.buttonEffects(1);
+                background-color: func.addTransparency(var.$color-blue, 80%);
+            }
+        }
     }
-
+    
     .google-sign-in {
         @include mix.flex();
         margin-block: 1rem;
+        transition: all 500ms ease-in-out;
+        border-radius: 6px;
         svg {
             width: 20px;
             height: 20px;
+        }
+        
+        &:hover {
+            // filter: brightness(.7);
+            @include mix.buttonEffects();
+        }
+    }
+
+    a {
+        text-decoration: none;
+        color: var.$color-blue;
+        font-weight: 700;
+
+        &:hover {
+            text-decoration: underline;
+            color: func.addTransparency(var.$color-blue, 90%);
+            transition: all 300ms ease-in;
         }
     }
 }
