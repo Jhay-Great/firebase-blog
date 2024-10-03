@@ -46,7 +46,7 @@ export class AuthService implements ILogOut, ILogin {
 
   // sign up
   logout() {
-    signOut(this.auth);
+    from(signOut(this.auth));
   }
 
   // register / sign up
@@ -116,6 +116,7 @@ export class AuthService implements ILogOut, ILogin {
         // create a new user in the db
         // console.log('logging username: ', data.username);
         if (!data.username) return;
+        
         const usersCollections = this.firebaseService.documentCollection('users');
         const response = from(addDoc(usersCollections, data));
         response.subscribe(val => console.log(val));

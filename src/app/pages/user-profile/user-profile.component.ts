@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApplicationService } from '../../shared/services/app/application.service';
 import { AsyncPipe } from '@angular/common';
 import { Title, Meta } from '@angular/platform-browser';
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,6 +16,7 @@ export class UserProfileComponent implements OnInit{
 
   constructor (
     private applicationService: ApplicationService,
+    private auth: AuthService,
     private titleService: Title,
     private metaService: Meta,
   ) {
@@ -39,6 +41,10 @@ export class UserProfileComponent implements OnInit{
   getUserDetails () {
     // console.log('loggings')
     this.user$ = this.applicationService.getUser();
+  }
+
+  logout () {
+    this.auth.logout();
   }
 
 }
