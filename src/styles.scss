@@ -41,6 +41,13 @@ app-login, app-sign-up {
 
 }
 
+app-navbar {
+    width: 100%;
+    height: 80px;
+    @include mix.flex(row, space-between, center);
+    
+}
+
 h1 {}
 
 h2 {

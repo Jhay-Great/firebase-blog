@@ -8,7 +8,9 @@
 <section class="user-details-container">
     <section class="username-section">
         <h3>Username</h3>
-        <p class="username"></p>
+        <p class="username">
+            {{ user$. email | async }} 
+        </p>
     </section>
 
     <section class="email-section">

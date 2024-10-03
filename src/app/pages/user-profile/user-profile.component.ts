@@ -37,6 +37,7 @@ export class UserProfileComponent implements OnInit{
   }
 
   getUserDetails () {
+    // console.log('loggings')
     this.user$ = this.applicationService.getUser();
   }
 
