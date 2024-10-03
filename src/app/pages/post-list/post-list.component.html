@@ -16,7 +16,7 @@
     </button>
 </section>
 
-<section>
+<section class="post-container">
     @for (post of posts; track $index) {
         <app-post 
             [routerLink]="['post', post.id]"
