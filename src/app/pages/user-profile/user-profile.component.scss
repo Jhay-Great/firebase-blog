@@ -1,0 +1,73 @@
+@use '../../sass/mixins' as mix;
+@use '../../sass/variables' as var;
+@use '../../sass/function' as func;
+
+.content-container {
+    width: min(700px, 90%);
+    height: fit-content;
+    padding: 1rem 1.5rem;
+    border-radius: 4px;
+    @include mix.flex(column);
+    background-color: func.addTransparency(var.$color-white-faded, 14%);
+
+    & > section {
+        width: 100%;
+        height: fit-content;
+
+        .details {
+            @include mix.flex(column);
+            
+            @include mix.breakpoint('large') {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: auto;
+                section {
+                    @include mix.flex(column);
+                }
+    
+                .username-section {
+                    grid-column: 1 / 2;
+                }
+                .avatar {
+                    grid-column: 2 / 3;
+                }
+                .email-section {
+                    grid-row: 2;
+                }
+                .logout {
+                    grid-column: 1 / -1;
+                    
+                    // button {
+                    //     width: 100%;
+                    // }
+                }
+
+            }
+
+            button {
+                width: 100%;
+            }
+
+        }
+
+
+    }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+
+    h4 {
+        font-weight: 700;
+        font-size: func.double(var.$font-size-s);
+        color: var.$color-blue;
+        // color: var.$color-greyish-blue;
+    }
+    
+    p {
+        // font-weight: 500;
+        font-size: func.double(var.$font-size-m);
+
+    }
+
+}

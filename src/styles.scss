@@ -48,6 +48,10 @@ app-navbar {
     
 }
 
+app-user-profile {
+    @include mix.flex(row, center, center);
+}
+
 h1 {}
 
 h2 {

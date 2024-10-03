@@ -1,38 +1,42 @@
 
-<section>
-    <!-- {{ user$.username | async }} -->
-    {{ user$.email | async }}
-    {{ user$.creationTime | async }}
-</section>
+<div class="content-container">
+    <section class="user-details-container">
+        <h2>User Details</h2>
+        <div class="details">
+            <section class="username-section">
+                <h4>Username</h4>
+                <p class="username">
+                    {{ username }} 
+                </p>
+            </section>
+            
+            <section class="email-section">
+                <h4>Email</h4>
+                <p class="email">
+                    {{ email }} 
+                </p>
+            </section>
+        
+            <section class="avatar">
+                <div class="img-container"></div>
+                <input type="file" name="avatar" id="avatar">
+            </section>
+        
+            <section class="timestamp">
+                <h4>Last login</h4>
+                <p></p>
+            </section>
+        
+            <section class="logout">
+                <button>
+                    logout
+                </button>
+            </section>
 
-<section class="user-details-container">
-    <section class="username-section">
-        <h3>Username</h3>
-        <p class="username">
-            {{ user$. email | async }} 
-        </p>
+        </div>
+    
     </section>
 
-    <section class="email-section">
-        <h3>Email</h3>
-        <p class="emai"></p>
-    </section>
+</div>
 
-    <section class="avatar">
-        <div class="img-container"></div>
-        <input type="file" name="avatar" id="avatar">
-    </section>
-
-    <section class="timestamp">
-        <h3>Last login</h3>
-        <p></p>
-    </section>
-
-    <section class="logout">
-        <button>
-            logout
-        </button>
-    </section>
-
-</section>
 

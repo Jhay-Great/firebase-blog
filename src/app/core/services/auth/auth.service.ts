@@ -20,6 +20,7 @@ import {
 } from '../../models/auth.interface';
 import { addDoc, Firestore } from '@angular/fire/firestore';
 import { FirebaseService } from '../firebase/firebase.service';
+import { ApplicationService } from '../../../shared/services/app/application.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,8 @@ export class AuthService implements ILogOut, ILogin {
   constructor(
     private auth: Auth,
     private firestore: Firestore,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    private applicationService: ApplicationService,
   ) {}
 
   // login
@@ -116,7 +118,8 @@ export class AuthService implements ILogOut, ILogin {
         // create a new user in the db
         // console.log('logging username: ', data.username);
         if (!data.username) return;
-        
+        console.log('logging data: ', data);
+        this.applicationService.setUser(data);
         const usersCollections = this.firebaseService.documentCollection('users');
         const response = from(addDoc(usersCollections, data));
         response.subscribe(val => console.log(val));

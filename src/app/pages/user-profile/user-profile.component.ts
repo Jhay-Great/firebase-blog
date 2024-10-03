@@ -13,6 +13,9 @@ import { AuthService } from '../../core/services/auth/auth.service';
 })
 export class UserProfileComponent implements OnInit{
   user$!: any; // change type
+  email!:string;
+  username!:string;
+  date!:string;
 
   constructor (
     private applicationService: ApplicationService,
@@ -35,12 +38,19 @@ export class UserProfileComponent implements OnInit{
   ngOnInit(): void {
     // gets the user details
     this.getUserDetails();
-    this.user$.subscribe((value:any) => console.log('user: ', value))
+    // this.user$.subscribe((value:any) => console.log('user: ', value))
   }
 
   getUserDetails () {
-    // console.log('loggings')
-    this.user$ = this.applicationService.getUser();
+    console.log('loggings')
+    this.user$ = this.applicationService.getUser().subscribe({
+      next: value => {
+        this.email = value.email;
+        this.username = value.username;
+
+        console.log(this.email, this.username);
+      }
+    });
   }
 
   logout () {
