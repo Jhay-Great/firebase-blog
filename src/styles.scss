@@ -1,6 +1,7 @@
 @use './app/sass/variables' as var;
 @use './app/sass/mixins' as mix;
 @use './app/sass/function' as func;
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
 * {
     margin: 0;
@@ -44,6 +45,7 @@ app-login, app-sign-up {
 app-navbar {
     width: 100%;
     height: 80px;
+    padding: 0 3rem;
     @include mix.flex(row, space-between, center);
     
 }
