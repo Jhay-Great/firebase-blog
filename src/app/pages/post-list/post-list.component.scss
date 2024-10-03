@@ -1,0 +1,24 @@
+@use '../../sass/variables' as var;
+@use '../../sass/mixins' as mix;
+@use '../../sass/function' as func;
+
+
+.post-container {
+    padding-inline: 0;
+    @include mix.flex(column, flex-start, stretch, 1.5);
+}
+
+app-post {
+    width: 100%;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 4px;
+    @include mix.flex(column);
+    border: 1px solid var.$color-white-faded;
+    transition: all 300ms ease-in-out;
+    
+    &:hover {
+        border: 1px solid transparent;
+        box-shadow: 0 0 3px 2px func.addTransparency(var.$color-white-faded, 30%);
+    }
+}

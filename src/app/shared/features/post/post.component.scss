@@ -1,0 +1,35 @@
+@use '../../../sass/variables' as var;
+@use '../../../sass/mixins' as mix;
+@use '../../../sass/function' as func;
+
+h4 {
+    font-size: func.double(var.$font-size-m);
+    font-family: var.$font-varela-round;
+}
+
+p {
+    font-size: var.$font-size-l;
+    font-family: var.$font-fredoka;
+
+}
+
+.interactive-btns {
+    @include mix.flex(row, flex-start, center);
+}
+
+.current-comments {
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+
+    &:hover svg path {
+        stroke: var.$color-blue;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+
+    }
+
+}
