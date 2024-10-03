@@ -9,8 +9,8 @@ export interface IPost {
 }
 
 export interface IComment {
-    userId?: string;
-    postId?: string;
-    id?: string;
+    userId: string;
+    postId: string;
+    id: string;
     comment: string;
 }

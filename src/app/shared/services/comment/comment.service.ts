@@ -31,6 +31,10 @@ export class CommentService {
     );
   }
 
+  delete (id:string) {
+    return this.firebase.delete('comments', id)
+  }
+
   // getCommentsByPostId(postId: string): Observable<any[]> {
   //   const commentsRef = collection(this.firestore, 'comments');
   //   const q = query(commentsRef, where("postId", "==", postId));

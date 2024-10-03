@@ -6,6 +6,7 @@ import { PostModalComponent } from '../../shared/features/post-modal/post-modal.
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommentService } from '../../shared/services/comment/comment.service';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-detail',
@@ -30,7 +31,16 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     private postService: PostsService,
     private fb: FormBuilder,
     private commentService: CommentService,
-  ) {};
+    private titleService: Title,
+    private metaService: Meta
+  ) {
+    // sets dynamic title for page
+    this.titleService.setTitle(`Blog Post | ${this.title}`);
+    
+    // sets dynamic meta tags
+    this.metaService.updateTag({name: 'keywords', content: 'post, posts, blog, blogs, write up, facts, story, stories'})
+    this.metaService.updateTag({name: 'description', content: 'A detailed page about a specific topic. Enjoy captivating short stories, facts, wild sayings from some of your favorite authors and community leaders'})
+  };
 
   ngOnInit(): void {
     this.subscription = this.activatedRoute.paramMap.subscribe(
@@ -115,6 +125,10 @@ export class PostDetailComponent implements OnInit, OnDestroy{
         // of loader
       }
     })
+  }
+
+  deleteComment (id:string) {
+    this.commentService.delete(id)
   }
 
 

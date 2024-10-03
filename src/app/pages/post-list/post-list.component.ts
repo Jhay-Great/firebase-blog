@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IPost } from '../../core/models/post.interface';
 import { PostComponent } from '../../shared/features/post/post.component';
 import { RouterLink } from '@angular/router';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-list',
@@ -20,7 +21,20 @@ export class PostListComponent implements OnInit, AfterViewInit{
 
   constructor (
     private postService: PostsService,
-  ) {};
+    private titleService: Title,
+    private metaService: Meta,
+  ) {
+    // sets dynamic page title
+    this.titleService.setTitle('Blog Post | Captivating Stories and Facts');
+
+    // sets dynamic meta tag for login page
+    this.metaService.updateTag({name: 'keywords', content: 'blog post, blogs, blog, write up, posts, post'})
+    this.metaService.updateTag({
+      name: 'description', 
+      content: 'Discover engaging blog posts with short stories, facts, and wild sayings from your favorite authors and community leaders. Dive into captivating content that inspires and informs.'
+    });
+    
+  }
 
   ngOnInit(): void {
     // this.postForm = this.fb.group({

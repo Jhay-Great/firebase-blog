@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { ApplicationService } from '../../shared/services/app/application.service';
 import { IUserResponseData } from '../../core/models/auth.interface';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +28,17 @@ export class LoginComponent implements OnInit {
     private authService: AuthService, 
     private applicationService: ApplicationService,
     private fb: FormBuilder,
-    private router: Router
-  ) {}
+    private router: Router,
+    private titleService: Title,
+    private metaService: Meta,
+  ) {
+    // sets dynamic page title
+    this.titleService.setTitle('WriteUp | login page');
+
+    // sets dynamic meta tag for login page
+    this.metaService.updateTag({name: 'keywords', content: 'blog post, login, registration, write up,'})
+    this.metaService.updateTag({name: 'description', content: 'a user friendly login page for write up blog application.'})
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({

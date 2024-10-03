@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationService } from '../../shared/services/app/application.service';
 import { AsyncPipe } from '@angular/common';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,7 +15,20 @@ export class UserProfileComponent implements OnInit{
 
   constructor (
     private applicationService: ApplicationService,
-  ) {};
+    private titleService: Title,
+    private metaService: Meta,
+  ) {
+    // sets title page
+    this.titleService.setTitle('Write up | Profile');
+
+    // sets meta tags
+    this.metaService.updateTag({
+      name: 'keywords', content: 'write up blog, profile, ',
+    });
+    this.metaService.updateTag({
+      name: 'description', content: 'Welcome to write up. Create a post about your favorite topic and share with like minds. Grow your community through your interest and passion.',
+    })
+  }
 
   ngOnInit(): void {
     // gets the user details

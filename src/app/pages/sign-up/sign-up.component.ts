@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sign-up',
@@ -22,7 +23,20 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder, 
     private authService: AuthService,
     private router: Router,
-  ) {}
+    private titleService: Title,
+    private metaService: Meta,
+  ) {
+    // sets title page
+    this.titleService.setTitle('Write up | Sign up');
+
+    // sets meta tags
+    this.metaService.updateTag({
+      name: 'keywords', content: 'write up blog, blogs, posts, sign up, registration, join us',
+    });
+    this.metaService.updateTag({
+      name: 'description', content: 'Join our community! Sign up to access exclusive content and features.',
+    })
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({

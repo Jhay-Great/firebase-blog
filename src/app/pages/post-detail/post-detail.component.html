@@ -24,9 +24,16 @@
 
     <section class="avaliable-comments">
         @for (comment of commentsData; track $index) {
-            <p>
-                {{ comment.comment }}
-            </p>
+            <div class="comment">
+                <p>
+                    {{ comment.comment }}
+                </p>
+
+                <button class="delete-comment" (click)="deleteComment(comment.id)">
+                    delete
+                </button>
+
+            </div>
         }
     </section>
 </section>

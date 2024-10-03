@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { addDoc, collection, collectionData, Firestore, query, where } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, query, where } from '@angular/fire/firestore';
 import { from, take, map, retry, catchError, throwError } from 'rxjs';
 
 @Injectable({
@@ -15,6 +15,10 @@ export class FirebaseService {
 
   documentCollection (collectionName:string) {
     return collection(this.firestore, collectionName);
+  }
+
+  document(docPath:string, id:string) {
+    return doc(this.firestore, `${docPath}/${id}`);
   }
 
   create <T>(data:T, collectionName:string) {
@@ -38,5 +42,10 @@ export class FirebaseService {
     const collections = this.documentCollection(collectionName)
     const queryData = query(collections, where("postId", "==", postId))
     return collectionData(queryData, { idField: 'id' });
+  }
+
+  delete (docPath:string, id:string) {
+    const docRef = this.document(docPath, id);
+    return from(deleteDoc(docRef));
   }
 }
