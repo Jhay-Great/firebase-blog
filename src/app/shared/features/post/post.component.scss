@@ -44,12 +44,17 @@ p {
 
 .delete {
     &:hover svg path {
-        stroke: 1;
+        // stroke: 1;
+        stroke-width: 32px;
+    }
+    svg {
+        width: 30px;
+        height: 30px;
+    
+    
     }
 }
-svg {
-    width: 30px;
-    height: 30px;
 
-
+.edit {
+    @extend .current-comments;
 }
