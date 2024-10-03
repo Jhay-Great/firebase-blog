@@ -49,7 +49,7 @@ app-navbar {
 }
 
 app-user-profile {
-    @include mix.flex(row, center, center);
+    @include mix.flex(column, center, center);
 }
 
 h1 {}

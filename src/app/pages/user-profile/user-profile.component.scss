@@ -7,16 +7,17 @@
     height: fit-content;
     padding: 1rem 1.5rem;
     border-radius: 4px;
-    @include mix.flex(column);
+    @include mix.flex(column, flex-start, center, 2);
     background-color: func.addTransparency(var.$color-white-faded, 14%);
 
     & > section {
         width: 100%;
         height: fit-content;
+        @include mix.flex(column);
 
         .details {
             @include mix.flex(column);
-            border-bottom: 1px solid var.$color-white-faded, 80%;
+            // border-bottom: 1px solid var.$color-white-faded, 80%;
             padding-bottom: 2rem;
             
             
@@ -56,9 +57,6 @@
 
     }
 
-    h2 {
-        margin-bottom: 1rem;
-    }
 
     h4 {
         font-weight: 700;
@@ -74,3 +72,21 @@
     }
 
 }
+
+hr {
+    height: 2px;
+    width: 100%;
+    background-color: var.$color-white-faded;
+}
+
+.build-post {
+    button {
+        width: 300px;
+        background-color: var.$color-white;
+        border: 1px solid var.$color-white-faded;
+        border-radius: 4px;
+        font-weight: 600;
+        
+    }
+}
+
