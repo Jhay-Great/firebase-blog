@@ -15,6 +15,14 @@ p {
 
 .interactive-btns {
     @include mix.flex(row, flex-start, center);
+
+    
+    button {
+        padding: 0;
+        background: none;
+        border: none;
+    }
+
 }
 
 .current-comments {
@@ -31,5 +39,17 @@ p {
         height: 20px;
 
     }
+
+}
+
+.delete {
+    &:hover svg path {
+        stroke: 1;
+    }
+}
+svg {
+    width: 30px;
+    height: 30px;
+
 
 }
