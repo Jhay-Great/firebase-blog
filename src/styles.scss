@@ -54,6 +54,15 @@ app-user-profile {
     @include mix.flex(column, center, center);
 }
 
+app-post-list {
+    @extend app-user-profile;
+    & > section {
+        width: min(700px, 90%);
+        height: fit-content;
+        padding: 1rem;
+    }
+}
+
 h1 {}
 
 h2 {
