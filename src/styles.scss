@@ -36,7 +36,9 @@ app-login, app-sign-up {
     justify-content: center;
     align-items: center;
     background-color: var.$color-white;
-    background: color-mix(in srgb, var.$color-white 95%, transparent)
+    position: absolute;
+    // background: color-mix(in srgb, var.$color-white 95%, transparent)
+    
     // filter: brightness(.8);
     // backdrop-filter: brightness(.9);
 

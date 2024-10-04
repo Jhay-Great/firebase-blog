@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApplicationService } from '../../shared/services/app/application.service';
 import { AsyncPipe } from '@angular/common';
 import { Title, Meta } from '@angular/platform-browser';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { IUserResponseData } from '../../core/models/auth.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,14 +14,17 @@ import { RouterLink } from '@angular/router';
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
-export class UserProfileComponent implements OnInit{
+export class UserProfileComponent implements OnInit, OnDestroy{
   user$!: any; // change type
   email!:string;
   username!:string;
   date!:string;
+  user!:IUserResponseData;
+  subscription!:Subscription;
 
   constructor (
     private applicationService: ApplicationService,
+    private router: Router,
     private auth: AuthService,
     private titleService: Title,
     private metaService: Meta,
@@ -42,10 +47,15 @@ export class UserProfileComponent implements OnInit{
     // this.user$.subscribe((value:any) => console.log('user: ', value))
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   getUserDetails () {
     console.log('loggings')
-    this.user$ = this.applicationService.getUser().subscribe({
+    this.subscription = this.user$ = this.applicationService.getUser().subscribe({
       next: value => {
+        this.user = value;
         this.email = value.email;
         this.username = value.username;
 
@@ -56,6 +66,7 @@ export class UserProfileComponent implements OnInit{
 
   logout () {
     this.auth.logout();
+    this.router.navigate(['login']);
   }
 
 }

@@ -6,14 +6,14 @@
             <section class="username-section">
                 <h4>Username</h4>
                 <p class="username">
-                    {{ username }} 
+                    {{ user.username }} 
                 </p>
             </section>
             
             <section class="email-section">
                 <h4>Email</h4>
                 <p class="email">
-                    {{ email }} 
+                    {{ user.email }} 
                 </p>
             </section>
         
@@ -24,10 +24,10 @@
         
             <section class="timestamp">
                 <h4>Last login</h4>
-                <p></p>
+                <p> {{ user.lastSignInTime }} </p>
             </section>
         
-            <section class="logout">
+            <section class="logout" (click)="logout()"> 
                 <button>
                     logout
                 </button>

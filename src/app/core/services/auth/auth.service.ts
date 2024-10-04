@@ -48,6 +48,7 @@ export class AuthService implements ILogOut, ILogin {
 
   // sign up
   logout() {
+    console.log('triggered');
     from(signOut(this.auth));
   }
 
