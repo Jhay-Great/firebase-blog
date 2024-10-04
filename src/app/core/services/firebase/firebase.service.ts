@@ -55,4 +55,10 @@ export class FirebaseService {
     return from(deleteDoc(docRef));
   }
 
+  getCurrentUser () {
+    // this.firebase.
+    return this.auth.currentUser;
+
+  }
+
 }

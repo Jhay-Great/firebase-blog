@@ -3,7 +3,7 @@ export interface IPost {
     body: string;
     title: string;
     comments?: IComment[]
-    userId?: string;
+    userId: string;
     updatedAt?: string;
     createdAt?: string;
 }

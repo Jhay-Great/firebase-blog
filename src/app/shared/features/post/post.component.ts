@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IPost } from '../../../core/models/post.interface';
 import { PostsService } from '../../services/posts/posts.service';
 import { Router, RouterLink } from '@angular/router';
+import { ApplicationService } from '../../services/app/application.service';
 
 @Component({
   selector: 'app-post',
@@ -15,11 +16,12 @@ export class PostComponent implements OnInit {
 
   constructor (
     private postService: PostsService,
+    private applicationService: ApplicationService,
     private router: Router,
   ) {};
 
   ngOnInit(): void {
-    // console.log(this.post)
+    console.log(this.post)
   }
 
   editPost (id:string) {
@@ -42,5 +44,13 @@ export class PostComponent implements OnInit {
       }
     })
   }
+
+  
+  authorPrivileges (id:string) {
+    return this.applicationService.checkAuthorPrivileges(id);
+    
+    
+  }
+
 
 }

@@ -6,6 +6,7 @@ import { IPost } from '../../core/models/post.interface';
 import { PostComponent } from '../../shared/features/post/post.component';
 import { RouterLink } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
+import { ApplicationService } from '../../shared/services/app/application.service';
 
 @Component({
   selector: 'app-post-list',
@@ -18,9 +19,11 @@ export class PostListComponent implements OnInit, AfterViewInit{
   // postForm!:FormGroup;
   // errorMessage!:string;
   posts!:any[];
+  isAuthor!:boolean;
 
   constructor (
     private postService: PostsService,
+    private applicationService: ApplicationService,
     private titleService: Title,
     private metaService: Meta,
   ) {
@@ -44,6 +47,8 @@ export class PostListComponent implements OnInit, AfterViewInit{
     // console.log(this.postService.createPost());
     // this.posts = this.postService.getAllPosts();
 
+    // this.authorPrivileges();
+
   }
   
   ngAfterViewInit(): void {
@@ -64,6 +69,19 @@ export class PostListComponent implements OnInit, AfterViewInit{
         console.log('done');
       }
     })
+  }
+
+
+  authorPrivileges (id:string) {
+    // console.log('prints id: ', id);
+    this.applicationService.checkAuthorPrivileges(id);
+    
+    // this.applicationService.checkAuthorPrivileges().subscribe({
+    //   next: data => {
+    //     this.isAuthor = data;
+    //     console.log(data);
+    //   }
+    // });
   }
 
 

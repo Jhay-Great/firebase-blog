@@ -81,12 +81,14 @@ export class AuthService implements ILogOut, ILogin {
     return this.handleProviderResponse(response);
   }
 
-  // sets token
+  // getUser
+
+  // sets token // for interceptors
   updateToken (token:string | undefined) {
     this.token = token;
   }
 
-  // retrieves token
+  // retrieves token // for interceptors
   getToken () {
     return this.token;
   }
