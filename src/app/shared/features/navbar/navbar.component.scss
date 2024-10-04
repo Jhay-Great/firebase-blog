@@ -1,5 +1,6 @@
 @use '../../../sass/mixins' as mix;
 @use '../../../sass/variables' as var;
+@use '../../../sass/function' as func;
 
 .nav-container {
     width: 100%;
@@ -29,4 +30,32 @@
 
 .active-navbar {
     color: var.$color-blue;
+}
+
+.user-section {
+    width: fit-content;
+    height: 100%;
+    @include mix.flex(row, center, center);
+    cursor: pointer;
+
+    .user-avatar {
+        @include mix.flex(row, center, center);
+        width: 40px;
+        aspect-ratio: 1;
+        border-radius: 100%;
+        background-color: func.addTransparency(var.$color-blue, 30%);
+
+                // .user-section[_ngcontent-ng-c2569913876]   .user-avatar[_ngcontent-ng-c2569913876] {
+        //     /* height: 100%; */
+        //     aspect-ratio: 1;
+        //     border-radius: 100%;
+        //     width: 40px;
+        //     background: #fea;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+        // }
+
+
+    }
 }

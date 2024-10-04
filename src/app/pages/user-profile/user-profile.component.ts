@@ -3,11 +3,12 @@ import { ApplicationService } from '../../shared/services/app/application.servic
 import { AsyncPipe } from '@angular/common';
 import { Title, Meta } from '@angular/platform-browser';
 import { AuthService } from '../../core/services/auth/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [AsyncPipe, ],
+  imports: [AsyncPipe, RouterLink],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
