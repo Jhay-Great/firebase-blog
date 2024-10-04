@@ -35,6 +35,13 @@ export class AuthService implements ILogOut, ILogin {
     private applicationService: ApplicationService,
   ) {}
 
+  // authentication details
+  getUserDetails (postUserId:string) {
+    const currentUserId = this.auth.currentUser?.uid;
+    return currentUserId === postUserId;
+
+  }
+
   // login
   login(data: IUserData) {
     const { email, password } = data;
@@ -108,11 +115,11 @@ export class AuthService implements ILogOut, ILogin {
     return response.pipe(
       map((data) => {
         console.log('on success: ', data.user);
-        const { email, uid, metadata: {creationTime}, metadata} = data.user;
+        const { email, uid, metadata: {creationTime, lastSignInTime}, metadata} = data.user;
 
         // console.log('logging metadata: ', metadata);
         // console.log('logging user details: ', email, creationTime);
-        return { email, creationTime, uid, username };
+        return { email, creationTime, uid, username, lastSignInTime };
       }),
       tap(data => {
         console.log('logging data in tap: ', data); 

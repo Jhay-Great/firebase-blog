@@ -18,6 +18,7 @@ export interface IUserData {
 }
 
 export interface IUserResponseData {
+    // id:string;
     username: string;
     email: string;
     creationTime: number;

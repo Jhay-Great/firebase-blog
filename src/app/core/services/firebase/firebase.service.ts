@@ -44,8 +44,15 @@ export class FirebaseService {
     return collectionData(queryData, { idField: 'id' });
   }
 
+  getAllRelatedData (collectionName:string, id:string) {
+    const collections = this.documentCollection(collectionName)
+    const queryData = query(collections, where("userId", "==", id))
+    return collectionData(queryData, { idField: 'id' });
+  }
+
   delete (docPath:string, id:string) {
     const docRef = this.document(docPath, id);
     return from(deleteDoc(docRef));
   }
+
 }

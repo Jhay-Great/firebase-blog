@@ -6,6 +6,8 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { IUserResponseData } from '../../core/models/auth.interface';
 import { Subscription } from 'rxjs';
+import { FirebaseService } from '../../core/services/firebase/firebase.service';
+import { IComment, IPost } from '../../core/models/post.interface';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,11 +21,15 @@ export class UserProfileComponent implements OnInit, OnDestroy{
   email!:string;
   username!:string;
   date!:string;
+  postUserId!:string;
   user!:IUserResponseData;
+  userPosts!: IPost[];
   subscription!:Subscription;
+  postsSubscription!: Subscription;
 
   constructor (
     private applicationService: ApplicationService,
+    private firebase: FirebaseService,
     private router: Router,
     private auth: AuthService,
     private titleService: Title,
@@ -44,6 +50,7 @@ export class UserProfileComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     // gets the user details
     this.getUserDetails();
+    // this.authorPrivileges();
     // this.user$.subscribe((value:any) => console.log('user: ', value))
   }
 
@@ -56,10 +63,15 @@ export class UserProfileComponent implements OnInit, OnDestroy{
     this.subscription = this.user$ = this.applicationService.getUser().subscribe({
       next: value => {
         this.user = value;
-        this.email = value.email;
-        this.username = value.username;
+        console.log('data from user: ', value);
+        
+        const id = value.uid;
+        this.postUserId = id;
+        console.log('user id: ', id);
+        this.getUserPost(id);
+        console.log('this.user value: ', this.user);
 
-        console.log(this.email, this.username);
+        // console.log(this.email, this.username);
       }
     });
   }
@@ -68,5 +80,21 @@ export class UserProfileComponent implements OnInit, OnDestroy{
     this.auth.logout();
     this.router.navigate(['login']);
   }
+
+  getUserPost (id:string) {
+    console.log('id used in where: ', id);
+    const response = this.firebase.getAllRelatedData('posts', id);
+    this.postsSubscription = response.subscribe({
+      next: value => {
+        console.log('posts subscription data: ', value);
+        // this.userPosts = value; // assign user posts
+      }
+    })
+  }
+
+  // authorPrivileges () { strictly for testing not necessary after dev mode
+  //   // const id = this.auth.getUserDetails();
+  //   // console.log(id === this.postUserId);
+  // }
 
 }
