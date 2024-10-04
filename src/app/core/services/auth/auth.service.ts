@@ -9,7 +9,7 @@ import {
   getAuth,
   signInWithPopup,
 } from '@angular/fire/auth';
-import { catchError, from, map, Observable, of, retry, tap, throwError } from 'rxjs';
+import { catchError, from, map, Observable, of, retry, take, tap, throwError } from 'rxjs';
 
 // local imports
 import {
@@ -18,7 +18,7 @@ import {
   ISignIn,
   IUserData,
 } from '../../models/auth.interface';
-import { addDoc, Firestore } from '@angular/fire/firestore';
+import { addDoc, doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { FirebaseService } from '../firebase/firebase.service';
 import { ApplicationService } from '../../../shared/services/app/application.service';
 
@@ -115,14 +115,42 @@ export class AuthService implements ILogOut, ILogin {
       }),
       tap(data => {
         console.log('logging data in tap: ', data); 
+        console.log('is username truthy: ', data.username);
         // create a new user in the db
         // console.log('logging username: ', data.username);
-        if (!data.username) return;
+        
+        
+        if (!data.username) {
+          console.log('when username is falsy');
+          // this means we are logging in, so we fetch from the db
+          // const userCollection = this.firebaseService.document('users', data.uid);
+          console.log(data.uid);
+          const userCollection = doc(this.firestore, 'users', data.uid);
+          console.log('logging user collection data: ', userCollection);
+
+          const response = from(getDoc(userCollection)).pipe(
+            take(1),
+            map(userData => {
+              console.log('in map: ', userData)
+              if (userData.exists()) {
+
+                const data = userData.data();
+                console.log('logging data gotten from db: ', data);
+                this.applicationService.setUser(data); // gets user data
+              } else {
+                console.log('does not exists');
+              }
+
+            })
+          ).subscribe(); 
+          return;
+        };
+        // const usersCollections = this.firebaseService.documentCollection('users'); // get the user collections
+        const usersCollections = doc(this.firestore, 'users', data.uid);
         console.log('logging data: ', data);
-        this.applicationService.setUser(data);
-        const usersCollections = this.firebaseService.documentCollection('users');
-        const response = from(addDoc(usersCollections, data));
-        response.subscribe(val => console.log(val));
+        const response = from(setDoc(usersCollections, data));
+        response.subscribe(val => console.log('logging user collection: ', val));
+
 
 
       }),
