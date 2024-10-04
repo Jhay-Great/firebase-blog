@@ -70,7 +70,11 @@ app-post-modal {
     
 }
 
-h1 {}
+app-post-detail {
+    @extend app-user-profile;
+}
+
+// h1 {}
 
 h2 {
     font-size: func.double(var.$font-size-l);

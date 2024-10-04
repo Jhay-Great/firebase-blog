@@ -12,17 +12,20 @@
 
 </section>
 
-<section class="comments">
-    <h1>Comments</h1>
-    <!-- <app-post-modal /> -->
-    <section class="comments-section">
-        <form [formGroup]="commentForm" (ngSubmit)="addComment()">
-            <input type="text" formControlName="comment">
-            <button type="submit">Add comments</button>
-        </form>
-    </section>
+<section class="add-comments">
+    <h2>Add your comments</h2>
+    <form [formGroup]="commentForm" (ngSubmit)="addComment()">
+        <!-- <textarea type="text" formControlName="comment"> -->
+        <textarea formControlName="comment" id="comments" cols="20" rows="5" placeholder="Add your comments."></textarea>
+        <button type="submit">Add comments</button>
+    </form>
+</section>
 
-    <section class="avaliable-comments">
+<section class="comments">
+    <h2>Comments</h2>
+    <!-- <app-post-modal /> -->
+
+    <section class="available-comments">
         @for (comment of commentsData; track $index) {
             <div class="comment">
                 <p>

@@ -1,0 +1,61 @@
+@use '../../sass/variables' as var;
+@use '../../sass/mixins' as mix;
+@use '../../sass/function' as func;
+
+
+.blog-post, .add-comments, .comments {
+    width: min(700px, 90%);
+    height: auto;
+    margin: auto;
+}
+
+h1 {
+    font-size: func.double(var.$font-size-l);
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: func.double(var.$font-size-s);
+}
+
+h2 {
+    margin-bottom: 1.5rem;
+}
+
+.add-comments {
+    // width: 100%;
+    // height: fit-content;
+
+    form {
+        width: 100%;
+        @include mix.flex(column);
+
+        textarea {
+            padding: 1rem;
+
+            border: 0.5px solid transparent;
+            border-radius: 4px;
+            outline: none;
+            transition: all 500ms ease-in-out;
+            
+            // &:active, &:hover {
+            //     // border: .5px solid var.$color-dark-blue;
+            //     // border-color: transparent;
+            // }
+            &:focus {
+                border: .5px solid var.$color-dark-blue;
+            }
+            // input, textarea {
+            //     // width: 100%;
+            //     @include mix.relativeSize(100%, 40px);
+            //     padding: 0.5rem 1rem;
+        
+        
+            // }
+        }
+    }
+}
+
+.available-comments {
+    @include mix.flex(column);
+}
