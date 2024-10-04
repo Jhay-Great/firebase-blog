@@ -11,6 +11,13 @@ p {
     font-size: var.$font-size-l;
     font-family: var.$font-fredoka;
 
+    @include mix.flex(row, flex-start, stretch, .5);
+
+}
+
+span {
+    @include mix.svg(20, var.$color-blue);
+    cursor: pointer;
 }
 
 .interactive-btns {

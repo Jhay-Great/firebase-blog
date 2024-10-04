@@ -16,7 +16,7 @@ app-post {
     @include mix.flex(column);
     border: 1px solid var.$color-white-faded;
     transition: all 300ms ease-in-out;
-    cursor: pointer;
+    // cursor: pointer;
     
     &:hover {
         border: 1px solid transparent;

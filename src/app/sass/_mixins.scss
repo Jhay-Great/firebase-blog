@@ -55,6 +55,15 @@
 
 }
 
+@mixin svg ($width: 20, $hover-color: _) {
+    width: $width + px;
+
+    &:hover path {
+        stroke: $hover-color;
+        fill: $hover-color;
+    }
+}
+
 @mixin breakpoint ($breakpoint) {
     @if map-has-key($map: var.$map-for-breakpoints, $key: $breakpoint) {
         @media (min-width: map-get(var.$map-for-breakpoints, $breakpoint)) {

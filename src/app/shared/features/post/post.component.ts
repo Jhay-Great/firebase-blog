@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IPost } from '../../../core/models/post.interface';
 import { PostsService } from '../../services/posts/posts.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
