@@ -72,7 +72,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.isLoading = true;
-    this.reset();
     console.log('logging in');
     const formData = this.form;
     if (formData.invalid) {
@@ -81,6 +80,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     const data = formData.value;
+    this.reset();
     const response = this.authService.login(data);
     this.subscription = response.subscribe({
       next: response => {

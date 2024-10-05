@@ -81,13 +81,13 @@ export class SignUpComponent implements OnInit {
 
   signUp() {
     this.isLoading = true;
-    this.reset();
     const formData = this.form;
     if (formData.invalid) {
-      console.log(formData);
+      console.log(formData.value);
       return;
     }
     const data = formData.value;
+    this.reset();
     console.log('console.log: ', data);
     const response = this.authService.signup(data);
     response.subscribe({
