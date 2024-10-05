@@ -4,7 +4,7 @@ import { IComment } from '../../../core/models/post.interface';
 import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { retryError } from '../../../core/rxjs/rety.custom-operator';
-import { map } from 'rxjs';
+import { from, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,10 @@ export class CommentService {
     const userId = this.auth.currentUser?.uid;
     const response = this.firebase.create(data, 'comments');
     response.pipe(retryError());
+  }
+
+  getAllComments () {
+    return from( this.firebase.get('comments')) ;
   }
 
   getComments (postId:string) {

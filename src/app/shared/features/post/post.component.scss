@@ -36,6 +36,7 @@ span {
     width: fit-content;
     height: fit-content;
     cursor: pointer;
+    @include mix.flex(row, flex-start, center, .3);
 
     &:hover svg path {
         stroke: var.$color-blue;

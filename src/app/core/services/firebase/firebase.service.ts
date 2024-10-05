@@ -33,10 +33,10 @@ export class FirebaseService {
     
   };
 
-  // get (collectionName:string) {
-  //   const collections = this.documentCollection(collectionName);
-  //   return from(collectionData(collections, { idField: 'id'}));
-  // }
+  get (collectionName:string) {
+    const collections = this.documentCollection(collectionName);
+    return from(collectionData(collections, { idField: 'id'}));
+  }
 
   getsAllRelated (collectionName:string, postId:string) {
     const collections = this.documentCollection(collectionName)

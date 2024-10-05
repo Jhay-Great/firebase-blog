@@ -14,3 +14,12 @@ export interface IComment {
     id: string;
     comment: string;
 }
+
+export interface IPostWithComments {
+    
+body: string;
+comments: IComment[];
+id: string;
+title: string;
+userId: string;
+}

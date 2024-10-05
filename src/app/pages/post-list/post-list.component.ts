@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PostsService } from '../../shared/services/posts/posts.service';
 import { Observable } from 'rxjs';
-import { IPost } from '../../core/models/post.interface';
+import { IPost, IPostWithComments } from '../../core/models/post.interface';
 import { PostComponent } from '../../shared/features/post/post.component';
 import { RouterLink } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
@@ -19,6 +19,8 @@ export class PostListComponent implements OnInit, AfterViewInit{
   // postForm!:FormGroup;
   // errorMessage!:string;
   posts!:any[];
+  data!:IPostWithComments[];
+  commentsCount:number = 0;
   isAuthor!:boolean;
 
   constructor (
@@ -40,6 +42,7 @@ export class PostListComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+
     // this.postForm = this.fb.group({
     //   title: [''],
     //   body: ['', Validators.required],
@@ -53,6 +56,7 @@ export class PostListComponent implements OnInit, AfterViewInit{
   
   ngAfterViewInit(): void {
     this.getPosts();
+    this.getData();
     
   }
   
@@ -76,12 +80,16 @@ export class PostListComponent implements OnInit, AfterViewInit{
     // console.log('prints id: ', id);
     this.applicationService.checkAuthorPrivileges(id);
     
-    // this.applicationService.checkAuthorPrivileges().subscribe({
-    //   next: data => {
-    //     this.isAuthor = data;
-    //     console.log(data);
-    //   }
-    // });
+    
+  }
+
+  getData () {
+      this.applicationService.getPostWithComments().subscribe({
+      next: value => {
+        this.data = value;
+        console.log('logging post with comments: ', value);
+      },
+    });
   }
 
 

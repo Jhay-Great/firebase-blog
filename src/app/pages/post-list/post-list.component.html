@@ -10,14 +10,15 @@
     see comments
 </button> -->
 
-<section class="create-post" [routerLink]="['create-post']">
-    <button>
+<section class="create-post" >
+    <button [routerLink]="['create-post']">
         Create a post
     </button>
 </section>
 
 <section class="post-container">
-    @for (post of posts; track $index) {
+    <!-- @for (post of posts; track $index) { -->
+    @for (post of data; track $index) {
         <app-post 
            
             [post]="post"
