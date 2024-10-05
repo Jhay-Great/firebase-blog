@@ -1,6 +1,7 @@
 @use '../../sass/variables' as var;
 @use '../../sass/mixins' as mix;
 @use '../../sass/function' as func;
+@use '../../sass/loading-spinner' as loading-spinner;
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
 
 section {
@@ -61,6 +62,10 @@ section {
                 // @include mix.buttonEffects(1);
                 background-color: func.addTransparency(var.$color-blue, 80%);
             }
+
+            &:disabled {
+                background: func.addTransparency(var.$color-blue, 20%);
+            }
         }
     }
     
@@ -91,4 +96,29 @@ section {
             transition: all 300ms ease-in;
         }
     }
+}
+
+.error-message {
+    color: var.$color-red;
+}
+
+.error-response {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.spinner-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    inset: 0;
+    @include mix.flex(column, center, center);
+    background-color: func.addTransparency(var.$color-dark-blue, 20%);
+
+
+    .loader {
+        @include loading-spinner.spinner();
+    }
+
 }

@@ -22,6 +22,10 @@ import { Title, Meta } from '@angular/platform-browser';
 export class LoginComponent implements OnInit {
   form!: FormGroup;
   subscription!: Subscription;
+  isLoading:boolean = false;
+  isError:boolean = false;
+  isSuccess:boolean = false;
+  response!:string;
 
 
   constructor(
@@ -62,17 +66,25 @@ export class LoginComponent implements OnInit {
     return this.form.get('password');
   }
 
+  reset () {
+    this.form.reset();
+  }
+
   login() {
+    this.isLoading = true;
+    this.reset();
     console.log('logging in');
     const formData = this.form;
     if (formData.invalid) {
       console.log(formData.value);
+      this.isLoading = false;
       return;
     }
     const data = formData.value;
     const response = this.authService.login(data);
     this.subscription = response.subscribe({
       next: response => {
+        this.isLoading = false;
         // route to page
         console.log('response: ', response);
         const userData: IUserResponseData = {...response, username: data.username}
@@ -82,9 +94,13 @@ export class LoginComponent implements OnInit {
       error: error => {
         // display error message
         console.log('logging error: ', error);
+        this.isLoading = false;
+        this.isError = true;
+        this.response = error.message;
       },
       complete: () => {
-        console.log('done')
+        console.log('done');
+        this.isLoading = false;
       }
     })
   }

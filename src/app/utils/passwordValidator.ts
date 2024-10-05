@@ -3,9 +3,9 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 
 // validator fn definition
 export const passwordValidator = function():ValidatorFn {
-    return (control:AbstractControl):ValidationErrors | null => {
-        const password = control.get('password');
-        const confirmPassword = control.get('confirmPassword');
+    return (group:AbstractControl):ValidationErrors | null => {
+        const password = group.get('password');
+        const confirmPassword = group.get('confirmPassword');
 
         if (password && confirmPassword && password.value !== confirmPassword.value) {
             return { 'passwordMismatch': true };

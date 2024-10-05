@@ -8,6 +8,7 @@ import {
 import { AuthService } from '../../core/services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
+import { passwordValidator } from '../../utils/passwordValidator';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,6 +19,10 @@ import { Meta, Title } from '@angular/platform-browser';
 })
 export class SignUpComponent implements OnInit {
   form!: FormGroup;
+  isLoading:boolean = false;
+  isError:boolean = false;
+  isSuccess:boolean = false;
+  response!:string;
 
   constructor(
     private fb: FormBuilder, 
@@ -51,7 +56,7 @@ export class SignUpComponent implements OnInit {
         ],
       ],
       confirmPassword: ['', [Validators.required]],
-    });
+    }, {validators: passwordValidator});
   }
 
   get username () {
@@ -70,7 +75,13 @@ export class SignUpComponent implements OnInit {
     return this.form.get('confirmPassword');
   }
 
+  reset () {
+    this.form.reset();
+  }
+
   signUp() {
+    this.isLoading = true;
+    this.reset();
     const formData = this.form;
     if (formData.invalid) {
       console.log(formData);
@@ -82,14 +93,19 @@ export class SignUpComponent implements OnInit {
     response.subscribe({
       next: value => {
         console.log(value);
+        this.isLoading = false;
         this.router.navigate(['login'])
 
       },
       error: error => {
         console.log(error);
+        this.isLoading = false;
+        this.isError = true;
+        this.response = error.message;
         
       },
       complete: () => {
+        this.isLoading = false;
         console.log('done');
       }
     })
