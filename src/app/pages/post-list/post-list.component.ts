@@ -7,6 +7,7 @@ import { PostComponent } from '../../shared/features/post/post.component';
 import { RouterLink } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 import { ApplicationService } from '../../shared/services/app/application.service';
+import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-post-list',
@@ -26,6 +27,7 @@ export class PostListComponent implements OnInit, AfterViewInit{
   constructor (
     private postService: PostsService,
     private applicationService: ApplicationService,
+    private authService: AuthService,
     private titleService: Title,
     private metaService: Meta,
   ) {
@@ -42,7 +44,6 @@ export class PostListComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
-
     // this.postForm = this.fb.group({
     //   title: [''],
     //   body: ['', Validators.required],

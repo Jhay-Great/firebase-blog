@@ -15,11 +15,10 @@ export const routes: Routes = [
     title: 'Register',
   },
   {
-    path: 'login',
-    loadComponent: () =>
-      import('./pages/login/login.component').then((l) => l.LoginComponent),
-    title: 'Login',
-    // canActivate: [authGuard],
+    path: 'blog-posts',
+    loadComponent: () => import('./pages/post-list/post-list.component').then(pl => pl.PostListComponent),
+    title: 'PostList',
+    canActivate: [authGuard],
   },
   {
     path: 'profile',
@@ -52,8 +51,10 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./pages/post-list/post-list.component').then(pl => pl.PostListComponent),
-    title: 'PostList'
+    loadComponent: () =>
+      import('./pages/login/login.component').then((l) => l.LoginComponent),
+    title: 'Login',
+
   },
 
 ];

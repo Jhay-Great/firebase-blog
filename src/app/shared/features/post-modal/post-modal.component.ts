@@ -100,7 +100,7 @@ export class PostModalComponent implements OnInit, OnDestroy {
       },
       complete: () => {
         console.log('done');
-        this.router.navigate(['/']);
+        this.router.navigate(['blog-posts']);
       },
     });
   }
@@ -122,7 +122,7 @@ export class PostModalComponent implements OnInit, OnDestroy {
       },
       complete: () => {
         console.log('done');
-        this.router.navigate(['/']);
+        this.router.navigate(['blog-posts']);
       },
     })
     

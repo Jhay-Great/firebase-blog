@@ -133,9 +133,6 @@ export class AuthService implements ILogOut, ILogin {
         return { email, creationTime, uid, username, lastSignInTime };
       }),
       tap(data => {
-        this.getUserAccessToken().pipe(
-          map(data => console.log('checking if token exists: ', data)),
-        ).subscribe();
         console.log('logging data in tap: ', data); 
         console.log('is username truthy: ', data.username);
         // create a new user in the db
@@ -185,23 +182,13 @@ export class AuthService implements ILogOut, ILogin {
 
 
   getUserAccessToken() {
-    return authState(this.auth).pipe(
-      take(1),
-      switchMap(user => {
-        if (!user) {
-          return of(null);  
-        } 
-        return from(getIdTokenResult(user)).pipe(
-          map(tokenResult => {
-            return tokenResult.token ? tokenResult.token : null; 
-          }),
-          catchError(error => {
-            console.error('Error fetching token:', error);  
-            return of(null); 
-          })
-        );
-      })
+    return this.applicationService.getUser().pipe(
+      map(data => data.uid)
     );
+  }
+
+  access () {
+    return false;
   }
  
   

@@ -78,7 +78,7 @@ export class UserProfileComponent implements OnInit, OnDestroy{
 
   logout () {
     this.auth.logout();
-    this.router.navigate(['login']);
+    this.router.navigate(['']);
   }
 
   getUserPost (id:string) {
