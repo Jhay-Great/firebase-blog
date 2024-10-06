@@ -17,6 +17,8 @@
 <!-- user avatar -->
 <section class="user-section">
     <div class="user-avatar" [routerLink]="['profile']">
-        <p>J</p>
+        <p>
+            {{ userInitial || 'Usr'}}
+        </p>
     </div>
 </section>

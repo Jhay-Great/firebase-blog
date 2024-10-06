@@ -28,6 +28,13 @@ export class ApplicationService {
     return this.user$;
   }
 
+  getUserInitial () {
+    console.log('called from postlist component')
+
+    const user = this.firebase.getCurrentUser();
+    console.log('user details: ', user); 
+  }
+
   checkAuthorPrivileges (postId:string) {
     const currentUserId = this.firebase.getCurrentUser()?.uid;
     return currentUserId === postId;
@@ -51,10 +58,6 @@ export class ApplicationService {
         return posts.map(post => ({
           ...post,
           comments:comments.filter(comment => comment['postId'] === post.id)
-          // const id = post.id;
-          // const postComment = comments.map((comment) => comment['postId'] === id )
-
-          // console.log(id, postComment);
         }))
       })
     );

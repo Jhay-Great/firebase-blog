@@ -119,7 +119,7 @@ export class AuthService implements ILogOut, ILogin {
         console.log('on success: ', data.user);
         const { email, uid, metadata: {creationTime, lastSignInTime}, metadata} = data.user;
 
-        // console.log('logging metadata: ', metadata);
+        console.log('logging metadata: ', metadata);
         // console.log('logging user details: ', email, creationTime);
         return { email, creationTime, uid, username, lastSignInTime };
       }),
