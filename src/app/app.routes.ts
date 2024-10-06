@@ -23,31 +23,27 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadComponent: () => import('./pages/user-profile/user-profile.component').then(p => p.UserProfileComponent),
-    title: 'Profile'
+    title: 'Profile',
+    canActivate: [authGuard],
   },
   {
     path: 'create-post',
     loadComponent: () => import('./shared/features/post-modal/post-modal.component').then(pm => pm.PostModalComponent),
     title: 'Create a post',
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'edit-post/:id',
     loadComponent: () => import('./shared/features/post-modal/post-modal.component').then(pm => pm.PostModalComponent),
     title: 'Edit post',
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'post/:id',
     loadComponent: () => import('./pages/post-detail/post-detail.component').then(d => d.PostDetailComponent),
     title: 'Post',
-    // canActivate: [authGuard],
-
-
-    // path: 'post/:id',
-    // loadComponent: () => import('./pages/post-detail/post-detail.component').then(d => d.PostDetailComponent),
-    // // loadComponent: () => import('./pages/post-detail/post-detail.component').then(d => d.PostDetailComponent),
-    // title: 'Post',
+    canActivate: [authGuard],
+    
   },
   {
     path: '',
