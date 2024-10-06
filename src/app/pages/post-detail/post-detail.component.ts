@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommentService } from '../../shared/services/comment/comment.service';
 import { Meta, Title } from '@angular/platform-browser';
+import { AnalyticsService } from '../../core/services/analytics/analytics.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -32,7 +33,8 @@ export class PostDetailComponent implements OnInit, OnDestroy{
     private fb: FormBuilder,
     private commentService: CommentService, 
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
+    private analyticsService: AnalyticsService,
   ) {
     // sets dynamic title for page
     this.titleService.setTitle(`Blog Post | ${this.title}`);
@@ -58,6 +60,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
               this.blogPost = value;
               this.title = value.title;
               this.body = value.body;
+              this.analyticsService.trackBlogPostView(this.postId, this.title);
             },
             error: error => {
               console.log(error);
@@ -89,6 +92,7 @@ export class PostDetailComponent implements OnInit, OnDestroy{
   }
 
   addComment () {
+    this.analyticsService.trackButtonClick('add_comment');
     const commentData = this.commentForm;
     if (commentData.invalid) {
       console.log('error occurred');

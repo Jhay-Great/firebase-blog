@@ -9,6 +9,7 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { passwordValidator } from '../../utils/passwordValidator';
+import { AnalyticsService } from '../../core/services/analytics/analytics.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,6 +28,7 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private authService: AuthService,
+    private analyticsService: AnalyticsService,
     private router: Router,
     private titleService: Title,
     private metaService: Meta,
@@ -44,6 +46,7 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.analyticsService.trackPageView('sign-up');
     this.form = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -80,6 +83,7 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp() {
+    this.analyticsService.trackButtonClick('login');
     this.isLoading = true;
     const formData = this.form;
     if (formData.invalid) {
@@ -92,6 +96,7 @@ export class SignUpComponent implements OnInit {
     const response = this.authService.signup(data);
     response.subscribe({
       next: value => {
+        this.analyticsService.trackSignUp();
         console.log(value);
         this.isLoading = false;
         this.router.navigate(['login'])

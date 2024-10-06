@@ -11,6 +11,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ApplicationService } from '../../shared/services/app/application.service';
 import { IUserResponseData } from '../../core/models/auth.interface';
 import { Title, Meta } from '@angular/platform-browser';
+import { AnalyticsService } from '../../core/services/analytics/analytics.service';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private applicationService: ApplicationService,
+    private analyticsService: AnalyticsService,
     private fb: FormBuilder,
     private router: Router,
     private titleService: Title,
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.analyticsService.trackPageView('login');
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: [
@@ -71,6 +74,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.analyticsService.trackButtonClick('login');
     this.isLoading = true;
     console.log('logging in');
     const formData = this.form;
@@ -84,6 +88,7 @@ export class LoginComponent implements OnInit {
     const response = this.authService.login(data);
     this.subscription = response.subscribe({
       next: response => {
+        this.analyticsService.trackLogin();
         this.isLoading = false;
         // route to page
         console.log('response: ', response);

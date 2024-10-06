@@ -7,12 +7,14 @@ export const authGuard: CanActivateFn = (route, state) => {
   console.log('called route guard');
   const authService = inject(AuthService);
   const router = inject(Router);
+  console.log('this is runnings')
 
   const user = authService.getUserAccessToken();
   // let authenticated;
   return user.pipe(
     map(data => {
-      if (!data?.uid) {
+      console.log(data, data.uid);
+      if (!data ) {
         router.navigate(['']);
         return false;
       }

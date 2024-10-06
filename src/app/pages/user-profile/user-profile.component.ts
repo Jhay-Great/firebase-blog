@@ -8,6 +8,7 @@ import { IUserResponseData } from '../../core/models/auth.interface';
 import { Subscription } from 'rxjs';
 import { FirebaseService } from '../../core/services/firebase/firebase.service';
 import { IComment, IPost } from '../../core/models/post.interface';
+import { AnalyticsService } from '../../core/services/analytics/analytics.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -34,6 +35,7 @@ export class UserProfileComponent implements OnInit, OnDestroy{
     private auth: AuthService,
     private titleService: Title,
     private metaService: Meta,
+    private analyticsService: AnalyticsService,
   ) {
     // sets title page
     this.titleService.setTitle('Write up | Profile');
@@ -52,6 +54,7 @@ export class UserProfileComponent implements OnInit, OnDestroy{
     this.getUserDetails();
     // this.authorPrivileges();
     // this.user$.subscribe((value:any) => console.log('user: ', value))
+    this.analyticsService.trackPageView('profile');
   }
 
   ngOnDestroy(): void {

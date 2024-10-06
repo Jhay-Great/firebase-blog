@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 import { ApplicationService } from '../../shared/services/app/application.service';
 import { AuthService } from '../../core/services/auth/auth.service';
+import { AnalyticsService } from '../../core/services/analytics/analytics.service';
 
 @Component({
   selector: 'app-post-list',
@@ -27,6 +28,7 @@ export class PostListComponent implements OnInit, AfterViewInit{
   constructor (
     private postService: PostsService,
     private applicationService: ApplicationService,
+    private analyticsService: AnalyticsService,
     private authService: AuthService,
     private titleService: Title,
     private metaService: Meta,
@@ -44,6 +46,7 @@ export class PostListComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+    this.analyticsService.trackPageView('blog_post_list');
     // this.postForm = this.fb.group({
     //   title: [''],
     //   body: ['', Validators.required],
@@ -58,6 +61,7 @@ export class PostListComponent implements OnInit, AfterViewInit{
   ngAfterViewInit(): void {
     this.getPosts();
     this.getData();
+    
 
     // unique
     this.applicationService.getUserInitial();

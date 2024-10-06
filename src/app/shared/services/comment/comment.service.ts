@@ -5,6 +5,7 @@ import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { retryError } from '../../../core/rxjs/rety.custom-operator';
 import { from, map } from 'rxjs';
+import { AnalyticsService } from '../../../core/services/analytics/analytics.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,14 @@ export class CommentService {
     private firebase: FirebaseService,
     private firestore: Firestore, 
     private auth: Auth,
+    private analyticsService: AnalyticsService,
   ) { }
 
   post (data:IComment) {
     const userId = this.auth.currentUser?.uid;
     const response = this.firebase.create(data, 'comments');
     response.pipe(retryError());
+    this.analyticsService.trackComment(data.postId, data.userId);
   }
 
   getAllComments () {
@@ -36,7 +39,8 @@ export class CommentService {
   }
 
   delete (id:string) {
-    return this.firebase.delete('comments', id)
+    this.analyticsService.trackButtonClick('delete_comment');
+    return this.firebase.delete('comments', id);
   }
 
   // getCommentsByPostId(postId: string): Observable<any[]> {
